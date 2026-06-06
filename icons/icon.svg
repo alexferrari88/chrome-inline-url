@@ -1,25 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
-  <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7C3AED" />
-      <stop offset="100%" stop-color="#2563EB" />
-    </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3" />
-    </filter>
-  </defs>
-  <!-- Background Circle with Gradient -->
-  <circle cx="64" cy="64" r="58" fill="url(#bgGrad)" filter="url(#shadow)" />
-  <!-- Link Symbol and URL badge inside -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Solid Background Circle -->
+  <circle cx="64" cy="64" r="60" fill="#7C3AED" />
+  <!-- Link Symbol (White) -->
   <g fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" transform="translate(18, 22)">
-    <!-- Left Link Loop -->
+    <!-- Left Loop -->
     <path d="M38 46H26C15 46 6 37 6 26C6 15 15 6 26 6H38" />
-    <!-- Right Link Loop -->
+    <!-- Right Loop -->
     <path d="M54 26H66C77 26 86 35 86 46C86 57 77 66 66 66H54" />
     <!-- Center connecting line -->
     <line x1="32" y1="36" x2="60" y2="36" stroke-width="10" />
   </g>
-  <!-- Small badge icon inside indicating "URL text" -->
-  <rect x="76" y="76" width="38" height="24" rx="8" fill="#10B981" />
-  <text x="95" y="92" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">URL</text>
+  <!-- Small green URL badge in bottom right -->
+  <rect x="72" y="72" width="44" height="26" rx="8" fill="#10B981" />
+  <text x="94" y="90" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">URL</text>
 </svg>
