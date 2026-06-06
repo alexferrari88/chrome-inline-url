@@ -5,7 +5,8 @@
   "description": "Displays destination URLs inline for whitelisted websites inside specified CSS selectors.",
   "permissions": [
     "storage",
-    "activeTab"
+    "activeTab",
+    "favicon"
   ],
   "action": {
     "default_popup": "popup/popup.html",
@@ -31,6 +32,12 @@
       "js": ["scripts/content.js"],
       "css": ["scripts/content.css"],
       "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["_favicon/*"],
+      "matches": ["<all_urls>"]
     }
   ],
   "commands": {

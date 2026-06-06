@@ -28,6 +28,17 @@
   transition: all 0.2s ease !important;
 }
 
+/* Favicon image inside badge */
+.chrome-inline-url-favicon {
+  width: 14px !important;
+  height: 14px !important;
+  margin-right: 4px !important;
+  border-radius: 2px !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
 /* Hover state styling */
 .chrome-inline-url-badge:hover {
   background-color: rgba(139, 92, 246, 0.12) !important;

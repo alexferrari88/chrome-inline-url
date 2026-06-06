@@ -112,8 +112,31 @@
     // Create badge
     const badge = document.createElement('span');
     badge.className = 'chrome-inline-url-badge';
-    badge.textContent = ` (${displayUrl}) `;
     badge.title = href; // Show absolute full URL on system hover tooltip
+    
+    // Attempt to retrieve and inject favicon
+    try {
+      const parsedUrl = new URL(href, window.location.href);
+      if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
+        const faviconImg = document.createElement('img');
+        faviconImg.className = 'chrome-inline-url-favicon';
+        
+        // Construct the Chrome extension favicon URL
+        const faviconUrl = new URL(chrome.runtime.getURL('/_favicon/'));
+        faviconUrl.searchParams.append('pageUrl', parsedUrl.origin);
+        faviconUrl.searchParams.append('size', '16');
+        
+        faviconImg.src = faviconUrl.toString();
+        faviconImg.alt = '';
+        badge.appendChild(faviconImg);
+      }
+    } catch (e) {
+      // Ignore URL parsing errors for relative/invalid links
+    }
+
+    // Append the display text inside parentheses
+    const textNode = document.createTextNode(`(${displayUrl})`);
+    badge.appendChild(textNode);
     
     // Prevent clicking the badge from acting as the link if desired
     badge.addEventListener('click', (e) => {
