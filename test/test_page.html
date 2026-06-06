@@ -92,6 +92,13 @@
       <li>Now, edit the selector in the popup card to: <code>.article-content</code> and press Enter (or click save). Only links inside the white article card should show their inline URLs! Links in the header and sidebar should be clean.</li>
       <li>Press <code>Alt + Shift + U</code> to toggle the link displays on/off.</li>
       <li>Click the <strong>Simulate Dynamic Content</strong> button below to verify that new links also get inline URLs.</li>
+      <li>To test hostname-only formatting:
+        <ul>
+          <li>Open the extension popup and toggle the <strong>Show just hostname</strong> checkbox under <strong>Global Link Format</strong>. The links on this page (e.g. Hacker News, Reddit Programming) should now only show hostnames (e.g. <code>(news.ycombinator.com)</code>, <code>(reddit.com)</code>) instead of full URLs.</li>
+          <li>In the popup site card for this website, change the <strong>Format</strong> override select to <strong>Full URL</strong>. Observe that the links on this page revert to full paths (e.g., showing <code>reddit.com/r/programming</code>) even though the global hostname setting is checked.</li>
+          <li>Set the site override back to <strong>Use Global Setting</strong> to see it sync back with the global setting.</li>
+        </ul>
+      </li>
     </ol>
   </div>
 

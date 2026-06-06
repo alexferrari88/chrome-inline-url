@@ -6,6 +6,7 @@
   let observer = null;
   let debounceTimeout = null;
   let isToggledHidden = false;
+  let showJustHostnameGlobal = false;
 
   // 1. Helper function to check if domain matches whitelist pattern (e.g. subdomains)
   function isDomainMatched(currentHost, pattern) {
@@ -15,7 +16,7 @@
   }
 
   // 2. Clean URL formatting for aesthetic display
-  function formatUrlForDisplay(href) {
+  function formatUrlForDisplay(href, formatMode, showJustHostnameGlobal) {
     if (!href) return '';
     // Skip anchor-only or action URLs
     if (href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) {
@@ -24,6 +25,18 @@
 
     try {
       const url = new URL(href, window.location.href);
+
+      let showHostnameOnly = showJustHostnameGlobal;
+      if (formatMode === 'hostname') {
+        showHostnameOnly = true;
+      } else if (formatMode === 'full') {
+        showHostnameOnly = false;
+      }
+
+      if (showHostnameOnly) {
+        return url.hostname;
+      }
+
       let display = url.href.replace(/^(https?:\/\/)/, '');
       
       // Strip trailing slash if it's just the hostname path
@@ -93,7 +106,7 @@
     const href = anchor.getAttribute('href');
     if (!href) return;
 
-    const displayUrl = formatUrlForDisplay(href);
+    const displayUrl = formatUrlForDisplay(href, activeItem.urlFormat || 'default', showJustHostnameGlobal);
     if (!displayUrl) return;
 
     // Create badge
@@ -165,8 +178,9 @@
 
   // 9. Load config and apply logic
   function loadAndApply() {
-    chrome.storage.local.get({ whitelist: [] }, (data) => {
+    chrome.storage.local.get({ whitelist: [], showJustHostnameGlobal: false }, (data) => {
       whitelist = data.whitelist;
+      showJustHostnameGlobal = data.showJustHostnameGlobal;
       const currentHost = window.location.hostname;
 
       // Find if current site is whitelisted and active
@@ -207,7 +221,7 @@
 
   // 11. Listen for storage changes to instantly update DOM
   chrome.storage.onChanged.addListener((changes, areaName) => {
-    if (areaName === 'local' && changes.whitelist) {
+    if (areaName === 'local' && (changes.whitelist || changes.showJustHostnameGlobal !== undefined)) {
       loadAndApply();
     }
   });

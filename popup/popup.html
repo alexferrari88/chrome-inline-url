@@ -42,6 +42,18 @@
       <button class="btn btn-primary" id="btnQuickWhitelist">Whitelist Site</button>
     </div>
 
+    <!-- Global Settings -->
+    <div class="global-settings-banner">
+      <div class="settings-info">
+        <span class="settings-label">Global Link Format</span>
+        <span class="settings-title">Show just hostname</span>
+      </div>
+      <label class="switch-toggle">
+        <input type="checkbox" id="chkGlobalHostname">
+        <span class="slider"></span>
+      </label>
+    </div>
+
     <!-- Whitelist Section -->
     <main class="main-content">
       <div class="section-title">
@@ -122,6 +134,14 @@
               <path d="M5 13l4 4L19 7" />
             </svg>
           </button>
+        </div>
+        <div class="format-select-wrapper">
+          <span class="format-label">Format:</span>
+          <select class="card-format-select" title="Override link format for this site">
+            <option value="default">Use Global Setting</option>
+            <option value="hostname">Just Hostname</option>
+            <option value="full">Full URL</option>
+          </select>
         </div>
       </div>
     </div>

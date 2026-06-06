@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentDomainEl = document.getElementById('currentDomain');
   const btnQuickWhitelist = document.getElementById('btnQuickWhitelist');
   const currentSiteBanner = document.getElementById('currentSiteBanner');
+  const chkGlobalHostname = document.getElementById('chkGlobalHostname');
   
   const whitelistCount = document.getElementById('whitelistCount');
   const whitelistItemsList = document.getElementById('whitelistItemsList');
@@ -20,18 +21,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let currentTabDomain = '';
   let whitelist = [];
+  let showJustHostnameGlobal = false;
 
   // 1. Load data from chrome.storage
   function loadSettings(callback) {
-    chrome.storage.local.get({ whitelist: [] }, (data) => {
+    chrome.storage.local.get({ whitelist: [], showJustHostnameGlobal: false }, (data) => {
       whitelist = data.whitelist;
+      showJustHostnameGlobal = data.showJustHostnameGlobal;
       if (callback) callback();
     });
   }
 
   // 2. Save data to chrome.storage
   function saveSettings(callback) {
-    chrome.storage.local.set({ whitelist }, () => {
+    chrome.storage.local.set({ whitelist, showJustHostnameGlobal }, () => {
       updateUI();
       if (callback) callback();
     });
@@ -86,6 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 4. Update the complete Popup UI
   function updateUI() {
+    // Update global hostname checkbox
+    if (chkGlobalHostname) {
+      chkGlobalHostname.checked = showJustHostnameGlobal;
+    }
+
     // Update count badge
     whitelistCount.textContent = whitelist.length;
     
@@ -107,14 +115,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const deleteBtn = clone.querySelector('.btn-delete');
         const selectorInput = clone.querySelector('.card-selector-input');
         const saveBtn = clone.querySelector('.btn-save-selector');
+        const formatSelect = clone.querySelector('.card-format-select');
 
         domainSpan.textContent = item.domainPattern;
         activeToggle.checked = item.isEnabled;
         selectorInput.value = item.selector || '';
+        formatSelect.value = item.urlFormat || 'default';
 
         // Gray out input if disabled
         if (!item.isEnabled) {
           selectorInput.disabled = true;
+          formatSelect.disabled = true;
           card.style.opacity = '0.6';
         }
 
@@ -123,11 +134,19 @@ document.addEventListener('DOMContentLoaded', () => {
           item.isEnabled = activeToggle.checked;
           if (!item.isEnabled) {
             selectorInput.disabled = true;
+            formatSelect.disabled = true;
             card.style.opacity = '0.6';
           } else {
             selectorInput.disabled = false;
+            formatSelect.disabled = false;
             card.style.opacity = '1';
           }
+          saveSettings();
+        });
+
+        // Format Select handler
+        formatSelect.addEventListener('change', () => {
+          item.urlFormat = formatSelect.value;
           saveSettings();
         });
 
@@ -274,6 +293,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }
+  }
+
+  // 9. Listen for changes on the global hostname setting
+  if (chkGlobalHostname) {
+    chkGlobalHostname.addEventListener('change', () => {
+      showJustHostnameGlobal = chkGlobalHostname.checked;
+      saveSettings();
+    });
   }
 
   // Init
