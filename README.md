@@ -29,8 +29,8 @@ Since this extension is in active development, you can load it as an unpacked ex
 
 ## Testing Locally
 
-We have included a built-in test page **`test_page.html`** in this repository. 
-Open or drag `test_page.html` in Chrome after installing the extension to test its capabilities, including:
+We have included a built-in test page **`test/test_page.html`** in this repository. 
+Open or drag `test/test_page.html` in Chrome after installing the extension to test its capabilities, including:
 - Selector targeting.
 - Dynamic page content (infinite scroll simulation).
 - Keyboard shortcuts.
@@ -39,7 +39,7 @@ Open or drag `test_page.html` in Chrome after installing the extension to test i
 ## Tech Stack
 
 - **Extension Schema**: Manifest V3
-- **Background Orchestrator**: Service Worker (`background.js`)
+- **Background Orchestrator**: Service Worker (`scripts/background.js`)
 - **Storage**: Chrome Storage Local API
 - **Styling**: Vanilla CSS (Popup and injected badge elements)
 - **Icons**: Handcrafted vector SVG compiled into compliant multi-size PNGs.
