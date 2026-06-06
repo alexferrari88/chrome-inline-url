@@ -1,0 +1,42 @@
+/* Injected Inline URL Badges Styles */
+
+.chrome-inline-url-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  background-color: rgba(100, 116, 139, 0.08) !important;
+  color: #64748b !important;
+  font-size: 0.75em !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  font-weight: 500 !important;
+  padding: 1px 6px !important;
+  margin-left: 6px !important;
+  margin-right: 2px !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(100, 116, 139, 0.15) !important;
+  max-width: 280px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  vertical-align: middle !important;
+  text-decoration: none !important;
+  pointer-events: auto !important;
+  cursor: help !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Hover state styling */
+.chrome-inline-url-badge:hover {
+  background-color: rgba(139, 92, 246, 0.12) !important;
+  color: #8b5cf6 !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+  max-width: 500px !important; /* expand on hover to show more of the url if truncated */
+}
+
+/* Hide all badges when local toggle is set to hidden on the body */
+body.chrome-inline-urls-hidden .chrome-inline-url-badge {
+  display: none !important;
+}

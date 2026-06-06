@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "Inline Link Displayer",
+  "version": "1.0.0",
+  "description": "Displays destination URLs inline for whitelisted websites inside specified CSS selectors.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon-16.png",
+      "32": "icon-32.png",
+      "48": "icon-48.png",
+      "128": "icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "icon-16.png",
+    "32": "icon-32.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "commands": {
+    "toggle-links-local": {
+      "suggested_key": {
+        "default": "Alt+Shift+U"
+      },
+      "description": "Toggle inline link display on the current tab"
+    }
+  }
+}

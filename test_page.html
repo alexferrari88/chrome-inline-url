@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chrome Extension Test Page</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #333;
+      background-color: #f9f9f9;
+    }
+    header {
+      border-bottom: 2px solid #eaeaea;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+    .nav-links a {
+      margin-right: 15px;
+      color: #0066cc;
+      text-decoration: none;
+    }
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 30px;
+    }
+    .article-content {
+      background: #fff;
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid #e1e1e1;
+    }
+    .sidebar {
+      background: #f1f1f1;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .btn {
+      background-color: #7c3aed;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background-color: #6d28d9;
+    }
+    .instructions {
+      background-color: #e0f2fe;
+      border: 1px solid #bae6fd;
+      color: #0369a1;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .instructions ol {
+      margin-left: 20px;
+      margin-top: 8px;
+    }
+    .instructions li {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Link Displayer Extension Testing Page</h1>
+  
+  <div class="instructions">
+    <strong>How to test this extension:</strong>
+    <ol>
+      <li>Open Google Chrome and navigate to <code>chrome://extensions/</code>.</li>
+      <li>Enable <strong>Developer mode</strong> (toggle in the top-right corner).</li>
+      <li>Click <strong>Load unpacked</strong> (top-left) and select the extension directory: <br>
+      <code>/home/alex/src/chrome-inline-url</code></li>
+      <li>Once loaded, open this page (or drag it into a tab).</li>
+      <li>Click the extension icon in the toolbar. It should display the current domain (as a local file path or server host).</li>
+      <li>Click <strong>Whitelist Site</strong>. By default, you will see inline URLs next to ALL links on the page.</li>
+      <li>Now, edit the selector in the popup card to: <code>.article-content</code> and press Enter (or click save). Only links inside the white article card should show their inline URLs! Links in the header and sidebar should be clean.</li>
+      <li>Press <code>Alt + Shift + U</code> to toggle the link displays on/off.</li>
+      <li>Click the <strong>Simulate Dynamic Content</strong> button below to verify that new links also get inline URLs.</li>
+    </ol>
+  </div>
+
+  <header>
+    <div class="nav-links">
+      <a href="https://github.com">GitHub</a>
+      <a href="https://google.com">Google</a>
+      <a href="https://wikipedia.org">Wikipedia</a>
+    </div>
+  </header>
+
+  <div class="layout">
+    <main>
+      <div class="article-content" id="articleBody">
+        <h2>Inoreader-style Mock Article</h2>
+        <p>
+          This is a simulated article on a blogging platform. Here is a link pointing to <a href="https://news.ycombinator.com">Hacker News</a> and another pointing to <a href="https://reddit.com/r/programming">Reddit Programming</a>.
+        </p>
+        <p>
+          If you specify the selector <code>.article-content</code>, only links in this card will be decorated. For example, let's look at <a href="https://dev.to">Dev.to</a> for developer articles.
+        </p>
+      </div>
+      
+      <button class="btn" id="btnDynamic">Simulate Dynamic Content (Infinite Scroll)</button>
+    </main>
+
+    <aside class="sidebar">
+      <h3>Sidebar Links</h3>
+      <p>These are outside the main article selector.</p>
+      <ul>
+        <li><a href="https://twitter.com">Twitter</a></li>
+        <li><a href="https://linkedin.com">LinkedIn</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <script>
+    document.getElementById('btnDynamic').addEventListener('click', () => {
+      const p = document.createElement('p');
+      p.innerHTML = '<strong>Dynamic:</strong> Here is a dynamically loaded link to <a href="https://stackoverflow.com">StackOverflow</a> added to verify the MutationObserver.';
+      document.getElementById('articleBody').appendChild(p);
+    });
+  </script>
+</body>
+</html>
